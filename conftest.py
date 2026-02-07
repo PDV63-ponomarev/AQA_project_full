@@ -1,6 +1,5 @@
 import pytest
 from selene import browser
-# import pydantic
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from pydantic_settings import BaseSettings
@@ -14,9 +13,7 @@ class Config(BaseSettings):
     window_height: str = '1024'
     timeout: float = 3.0
 
-
 config = Config()
-
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -43,7 +40,4 @@ def browser_management():
     browser.config.window_height = config.window_height
     browser.config.timeout = config.timeout
 
-
-    yield browser
-
-    browser.quit()
+    yield
