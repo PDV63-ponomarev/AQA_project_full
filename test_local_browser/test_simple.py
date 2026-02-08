@@ -10,7 +10,7 @@ $env:DRIVER_NAME = "chrome"; pytest tests
 '''
 
 def test_simple_form():
-    browser.open('https://demoqa.com/text-box')
+    browser.open('/')
 
     browser.element('#userName').type(full_name)
     browser.element('#userEmail').type(email)

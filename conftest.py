@@ -1,25 +1,43 @@
 import pytest
-from selene import browser
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selene import Browser, Config
+from utils import attach
+from dotenv import load_dotenv
 
-from project import Config
-from project import get_driver
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    load_dotenv()
 
 
-@pytest.fixture(scope='function', autouse=True)
-def browser_management(request):
-    config = Config()
+@pytest.fixture(scope='function')
+def setup_browser(request):
+    options = Options()
+    selenoid_capabilities = {
+        "browserName": "chrome",
+        "browserVersion": "128.0",
+        "selenoid:options": {
+            "enableVNC": True,
+            "enableVideo": True
+        }
+    }
+    options.capabilities.update(selenoid_capabilities)
 
-    # driver = get_driver(config.driver_name)
+    login = os.getenv('LOGIN')
+    password = os.getenv('PASSWORD')
 
-    browser.config.base_url = config.base_url
-    browser.config.driver = get_driver(config.driver_name)
-    browser.config.hold_driver_at_exit = config.hold_driver_at_exit
-    browser.config.window_width = config.window_width
-    browser.config.window_height = config.window_height
-    browser.config.timeout = config.timeout
+    driver = webdriver.Remote(
+        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
+        options=options
+    )
 
-    yield
+    browser = Browser(Config(driver))
+    yield browser
 
-    # Закрываем браузер после теста
-    if not config.hold_driver_at_exit:
-        browser.quit()
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_html(browser)
+    attach.add_video(browser)
+
+    browser.quit()
