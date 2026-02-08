@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selene import Browser, Config
 from utils import attach
 from dotenv import load_dotenv
-from project import Config, get_driver
+# from project import Config, get_driver
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -37,6 +37,7 @@ def setup_browser(request):
     )
 
     driver.maximize_window()
+
     browser = Browser(Config(driver))
 
     # config = Config()
