@@ -33,6 +33,10 @@ def setup_browser(request):
     )
 
     browser = Browser(Config(driver))
+
+    browser.config.window_width = 1024
+    browser.config.window_height = 1024
+
     yield browser
 
     attach.add_screenshot(browser)
