@@ -2,10 +2,9 @@ import pytest
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selene import Browser, Config
+from selene import browser
 from utils import attach
 from dotenv import load_dotenv
-
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -36,10 +35,10 @@ def setup_browser(request):
         options=options
     )
 
-    driver.maximize_window()
-
-    browser = Browser(Config(driver))
-
+    browser.config.driver = driver
+    browser.config.base_url = 'https://demoqa.com/text-box'
+    browser.config.window_width = 1920
+    browser.config.window_height = 1080
 
 
     yield browser
