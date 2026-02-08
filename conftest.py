@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selene import Browser, Config
 from utils import attach
 from dotenv import load_dotenv
+from project import Config, get_driver
+
 
 @pytest.fixture(scope='session', autouse=True)
 def load_env():
@@ -14,6 +16,8 @@ def load_env():
 @pytest.fixture(scope='function')
 def setup_browser(request):
     options = Options()
+
+
     selenoid_capabilities = {
         "browserName": "chrome",
         "browserVersion": "128.0",
@@ -34,8 +38,13 @@ def setup_browser(request):
 
     browser = Browser(Config(driver))
 
-    browser.config.window_width = 1024
-    browser.config.window_height = 1024
+    config = Config()
+    browser.config.base_url = config.base_url
+    browser.config.driver = get_driver(config.driver_name)
+    browser.config.hold_driver_at_exit = config.hold_driver_at_exit
+    browser.config.window_width = config.window_width
+    browser.config.window_height = config.window_height
+    browser.config.timeout = config.timeout
 
     yield browser
 
