@@ -1,25 +1,28 @@
 from selene import have, browser
+import allure
 
 full_name = 'Иванов Иван'
 email = 'ivanov@gmail.com'
 address = 'Some adress'
 
-'''
-запуск
-$env:DRIVER_NAME = "chrome"; pytest tests
-'''
 
-def test_simple_form():
-    browser.open('https://demoqa.com/text-box')
+@allure.title("Successful fill form")
+def test_simple_form(setup_browser):
+    browser = setup_browser
 
-    browser.element('#userName').type(full_name)
-    browser.element('#userEmail').type(email)
-    browser.element('#currentAddress').type(address)
+    with allure.step('Открытие сайта'):
+        browser.open('https://demoqa.com/text-box')
 
-    browser.element('#submit').click()
+    with allure.step('Заполнение полей'):
+        browser.element('#userName').type(full_name)
+        browser.element('#userEmail').type(email)
+        browser.element('#currentAddress').type(address)
 
-    output = browser.element('#output')
-    output.should(have.text(f'Name:{full_name}'))
-    output.should(have.text(f'Email:{email}'))
-    output.should(have.text(f'Current Address :{address}'))
+        browser.element('#submit').click()
+
+    with allure.step('Проверка заполнености'):
+        output = browser.element('#output')
+        output.should(have.text(f'Name:{full_name}'))
+        output.should(have.text(f'Email:{email}'))
+        output.should(have.text(f'Current Address :{address}'))
 
