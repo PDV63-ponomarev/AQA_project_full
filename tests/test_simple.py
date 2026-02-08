@@ -11,7 +11,7 @@ def test_simple_form(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
-        browser.open('/')
+        browser.open('https://demoqa.com/text-box')
 
     with allure.step('Заполнение полей'):
         browser.element('#userName').type(full_name)
