@@ -36,15 +36,16 @@ def setup_browser(request):
         options=options
     )
 
+    driver.maximize_window()
     browser = Browser(Config(driver))
 
-    config = Config()
-    browser.config.base_url = config.base_url
-    browser.config.driver = get_driver(config.driver_name)
-    browser.config.hold_driver_at_exit = config.hold_driver_at_exit
-    browser.config.window_width = config.window_width
-    browser.config.window_height = config.window_height
-    browser.config.timeout = config.timeout
+    # config = Config()
+    # browser.config.base_url = config.base_url
+    # browser.config.driver = get_driver(config.driver_name)
+    # browser.config.hold_driver_at_exit = config.hold_driver_at_exit
+    # browser.config.window_width = config.window_width
+    # browser.config.window_height = config.window_height
+    # browser.config.timeout = config.timeout
 
     yield browser
 
