@@ -35,8 +35,8 @@ def setup_browser(request):
         options=options
     )
 
-    browser.config.driver = driverhttps://demoqa.com/text-box
-    browser.config.base_url = ''
+    browser.config.driver = driver
+    browser.config.base_url = 'https://demoqa.com/text-box'
     browser.config.window_width = 1920
     browser.config.window_height = 1080
 
