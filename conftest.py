@@ -62,6 +62,13 @@ def setup_browser(request):
     options.add_experimental_option('useAutomationExtension', False)
     options.page_load_strategy = 'eager'
 
+    # блок рекламы
+    options.add_argument('--disable-3d-apis')
+    options.add_argument('--disable-web-security')
+    options.add_argument('--disable-features=InterestCohort')
+    options.add_argument('--disable-features=PrivacySandboxSettings4')
+
+
     # Кастомные заголовки для сокрытия WebDriver
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--disable-infobars")
@@ -86,6 +93,8 @@ def setup_browser(request):
         }
     }
     options.capabilities.update(selenoid_capabilities)
+
+
 
     login = os.getenv('LOGIN')
     password = os.getenv('PASSWORD')
