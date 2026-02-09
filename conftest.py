@@ -11,67 +11,10 @@ from dotenv import load_dotenv
 def load_env():
     load_dotenv()
 
-'''
-# @pytest.fixture(scope='function')
-# def setup_browser(request):
-#     options = Options()
-# 
-# 
-#     selenoid_capabilities = {
-#         "browserName": "chrome",
-#         "browserVersion": "128.0",
-#         "selenoid:options": {
-#             "enableVNC": True,
-#             "enableVideo": True
-#         }
-#     }
-#     options.capabilities.update(selenoid_capabilities)
-# 
-#     login = os.getenv('LOGIN')
-#     password = os.getenv('PASSWORD')
-# 
-#     driver = webdriver.Remote(
-#         command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
-#         options=options
-#     )
-# 
-#     browser.config.driver = driver
-#     browser.config.base_url = 'https://demoqa.com/text-box'
-#     browser.config.window_width = 1920
-#     browser.config.window_height = 1080
-# 
-# 
-#     yield browser
-# 
-#     attach.add_screenshot(browser)
-#     attach.add_logs(browser)
-#     attach.add_html(browser)
-#     attach.add_video(browser)
-# 
-#     browser.quit()
-'''
 
 @pytest.fixture(scope='function')
 def setup_browser(request):
     options = Options()
-
-    # Настройки для скрытия автоматизации
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    options.add_argument('--no-sandbox')
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option('useAutomationExtension', False)
-    options.page_load_strategy = 'eager'
-
-    # блок рекламы
-    options.add_argument('--disable-3d-apis')
-    options.add_argument('--disable-web-security')
-    options.add_argument('--disable-features=InterestCohort')
-    options.add_argument('--disable-features=PrivacySandboxSettings4')
-
-
-    # Кастомные заголовки для сокрытия WebDriver
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_argument("--disable-infobars")
 
 
     selenoid_capabilities = {
@@ -80,21 +23,9 @@ def setup_browser(request):
         "selenoid:options": {
             "enableVNC": True,
             "enableVideo": True
-        },
-        # Добавляем опции для Selenoid
-        "goog:chromeOptions": {
-            "args": [
-                '--disable-blink-features=AutomationControlled',
-                '--no-sandbox',
-                '--disable-infobars'
-            ],
-            "excludeSwitches": ["enable-automation"],
-            "useAutomationExtension": False
         }
     }
     options.capabilities.update(selenoid_capabilities)
-
-
 
     login = os.getenv('LOGIN')
     password = os.getenv('PASSWORD')
@@ -104,14 +35,11 @@ def setup_browser(request):
         options=options
     )
 
-    # Дополнительно для Chrome - скрываем webdriver через JavaScript
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-
-
-    browser.config.driver = driver
-    browser.config.base_url = 'https://demoqa.com/text-box'
+    browser.config.driver = driverhttps://demoqa.com/text-box
+    browser.config.base_url = ''
     browser.config.window_width = 1920
     browser.config.window_height = 1080
+
 
     yield browser
 
@@ -120,5 +48,4 @@ def setup_browser(request):
     attach.add_html(browser)
     attach.add_video(browser)
 
-    # Закрытие браузера после теста
-    driver.quit()
+    browser.quit()

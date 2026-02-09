@@ -14,6 +14,8 @@ def test_simple_form(setup_browser):
         browser.open('/')
 
     with allure.step('Заполнение полей'):
+        browser.element('body').press(Keys.CONTROL + '-').press(Keys.CONTROL + '-')
+
         browser.element('#userName').type(full_name)
         browser.element('#userEmail').type(email)
         browser.element('#currentAddress').type(address)
