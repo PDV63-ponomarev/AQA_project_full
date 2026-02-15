@@ -1,5 +1,6 @@
 from selene import have, browser
 import allure
+from selenium.webdriver import Keys
 
 full_name = 'Иванов Иван'
 email = 'ivanov@gmail.com'
