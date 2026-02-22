@@ -7,7 +7,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 
 class Config(BaseSettings):
-    base_url: str = 'https://demoqa.com/text-box'
+    base_url: str = 'https://demoqa.com'
     driver_name: str = 'chrome'
     hold_driver_at_exit: bool = False
     window_width: str = '1024'

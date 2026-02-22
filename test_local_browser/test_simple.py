@@ -12,7 +12,7 @@ $env:DRIVER_NAME = "chrome"; pytest tests
 '''
 
 def test_simple_form():
-    browser.open('/')
+    browser.open('/text-box')
     sleep(5)
     browser.execute_script("document.body.style.zoom='50%'")
     sleep(5)
