@@ -1,6 +1,7 @@
 from selene import be, have, by
 from selenium.webdriver import Keys
 import allure
+import time
 
 firstName = 'Иван'
 lastName = 'Иванов'
@@ -31,6 +32,9 @@ def test_form_ru(setup_browser):
         browser.element('#dateOfBirthInput').click().send_keys(
             Keys.CONTROL + 'a',
             Keys.NULL,
+        )
+        time.sleep(2)
+        browser.element('#dateOfBirthInput').click().send_keys(
             '01 Jan 2020',
             Keys.ENTER,
         )
