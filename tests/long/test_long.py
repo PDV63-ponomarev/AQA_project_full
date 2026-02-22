@@ -18,7 +18,7 @@ def test_form_ru(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
-        browser.open('/')
+        browser.open('/automation-practice-form')
 
     with allure.step('Заполнение полей'):
         browser.element('#firstName').should(be.blank).type(firstName)

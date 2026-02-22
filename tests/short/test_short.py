@@ -12,7 +12,7 @@ def test_simple_form(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
-        browser.open('/')
+        browser.open('/text-box')
         browser.execute_script("document.body.style.zoom='75%'")
 
     with allure.step('Заполнение полей'):
