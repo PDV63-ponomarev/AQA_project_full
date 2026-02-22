@@ -32,6 +32,7 @@ def test_form_ru(setup_browser):
         browser.element('#dateOfBirthInput').click().send_keys(
             Keys.CONTROL + 'a',
             Keys.NULL,
+            '01 Jan 2020'
         )
         time.sleep(2)
         browser.element('#dateOfBirthInput').click().send_keys(
