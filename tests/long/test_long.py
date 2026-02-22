@@ -19,6 +19,7 @@ def test_form_ru(setup_browser):
 
     with allure.step('Открытие сайта'):
         browser.open('/automation-practice-form')
+        browser.execute_script("document.body.style.zoom='80%'")
 
     with allure.step('Заполнение полей'):
         browser.element('#firstName').should(be.blank).type(firstName)
@@ -26,26 +27,14 @@ def test_form_ru(setup_browser):
         browser.element('#userEmail').should(be.blank).type(mail)
         browser.element('[for="gender-radio-1"]').click()
         browser.element('#userNumber').type(number)
-        browser.element('#dateOfBirthInput').send_keys(
+
+        browser.element('#dateOfBirthInput').click().send_keys(
             Keys.CONTROL + 'a',
             Keys.NULL,
-            '01.01.2020',
+            '01 Jan 2020',
             Keys.ENTER,
         )
-
         browser.element('#dateOfBirthInput').should(have.value('01 Jan 2020'))
-        browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__year-select').click().element(
-            '[value="2026"]'
-        ).click()
-        browser.element('.react-datepicker__month-select').click().element(
-            '[value="0"]'
-        ).click()
-        browser.element(
-            '[class="react-datepicker__day react-datepicker__day--001"]'
-        ).click()
-
-        browser.element('#dateOfBirthInput').should(have.value(date))
 
         browser.element('#subjectsInput').type(predmet1).send_keys(Keys.ENTER)
         browser.element('#subjectsInput').type(predmet2)
@@ -57,20 +46,20 @@ def test_form_ru(setup_browser):
 
         browser.element('#currentAddress').type(addres)
 
-        browser.all('[class=" css-1wy0on6"]').first.click()
+        browser.all('[class="css-19bb58m"]').first.click()
         browser.element(by.text(state)).click()
 
-        browser.all('[class=" css-1wy0on6"]').second.click()
+        browser.all('[class="css-19bb58m"]').second.click()
         browser.element(by.text(city)).click()
 
         browser.element('#submit').click()
-
 
     with allure.step('Проверка заполнености'):
         browser.element('[class="modal-content"').should(be.visible)
         browser.element('[class="table-responsive"]').should(have.text(f'{firstName} {lastName}'))
         browser.element('[class="table-responsive"]').should(have.text(mail))
         browser.element('[class="table-responsive"]').should(have.text(number))
+        browser.element('[class="table-responsive"]').should(have.text('01 January,2020'))
         browser.element('[class="table-responsive"]').should(have.text(predmet1 + ', ' + predmet2))
         browser.element('[class="table-responsive"]').should(have.text(addres))
         browser.element('[class="table-responsive"]').should(have.text(state + ' ' + city))
