@@ -13,9 +13,9 @@ def test_simple_form(setup_browser):
 
     with allure.step('Открытие сайта'):
         browser.open('/')
+        browser.execute_script("document.body.style.zoom='50%'")
 
     with allure.step('Заполнение полей'):
-        browser.element('body').press(Keys.CONTROL + '-').press(Keys.CONTROL + '-')
 
         browser.element('#userName').type(full_name)
         browser.element('#userEmail').type(email)
