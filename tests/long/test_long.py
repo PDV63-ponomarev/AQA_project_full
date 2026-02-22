@@ -35,6 +35,7 @@ def test_form_ru(setup_browser):
             '01 Jan 2020'
         )
         time.sleep(2)
+        browser.element('#dateOfBirthInput').send_keys(Keys.ENTER)
         browser.element('#dateOfBirthInput').should(have.value('01 Jan 2020'))
 
         browser.element('#subjectsInput').type(predmet1).send_keys(Keys.ENTER)
