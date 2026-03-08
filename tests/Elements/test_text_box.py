@@ -5,7 +5,7 @@ full_name = 'Иванов Иван'
 email = 'ivanov@gmail.com'
 address = 'Some adress'
 
-@allure.title("Successful fill short text box")
+@allure.title("Successful fill text box")
 def test_simple_form(setup_browser):
     browser = setup_browser
 
