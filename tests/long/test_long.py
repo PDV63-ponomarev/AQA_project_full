@@ -14,8 +14,8 @@ predmet2 = 'Biology'
 state = 'Haryana'
 city = 'Karnal'
 
-@allure.title("Successful fill form")
-def test_form_ru(setup_browser):
+@allure.title("Successful fill practice form")
+def test_pracrice_form(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
@@ -28,7 +28,6 @@ def test_form_ru(setup_browser):
         browser.element('#userEmail').should(be.blank).type(mail)
         browser.element('[for="gender-radio-1"]').click()
         browser.element('#userNumber').type(number)
-
         browser.element('#dateOfBirthInput').click().send_keys(
             Keys.CONTROL + 'a',
             Keys.NULL,
