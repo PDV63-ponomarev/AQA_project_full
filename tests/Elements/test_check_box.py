@@ -35,7 +35,7 @@ def test_check_boxes(setup_browser):
         open_box(browser)
 
     with allure.step('Выбор общей папки'):
-        browser.elemet('[aria-label="Select Home"]').click()
+        browser.element('[aria-label="Select Home"]').click()
 
     with allure.step('Проверка выбора всех папок'):
         for element in browser.all('.rc-tree-checkbox'):
