@@ -48,7 +48,7 @@ def test_check_boxes(setup_browser):
 
         for checkbox in selected_checkboxes:
             text_element = checkbox.element('./..//span[contains(@class, "rc-tree-title")]')
-            text = text_element.execute_script('return element.textContent')
+            text = text_element.locate().text
             if text == 'Word File.doc':
                 selected_texts.append('wordFile')
             elif text == 'Excel File.doc':
@@ -58,7 +58,4 @@ def test_check_boxes(setup_browser):
 
         expected_text = ' '.join(selected_texts)
 
-        selected = browser.all('.text-success')
-        for word in selected:
-            word = word.execute_script('return element.textContent')
-            assert word in expected_text
+        browser.element('#result').should(have.text(expected_text))
