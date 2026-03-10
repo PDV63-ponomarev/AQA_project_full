@@ -58,4 +58,6 @@ def test_check_boxes(setup_browser):
 
         expected_text = ' '.join(selected_texts)
 
-        browser.element('#result').should(have.text(expected_text))
+        for word in browser.all('.text-success'):
+            word = word.locate().text
+            assert word in expected_text

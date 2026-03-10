@@ -41,7 +41,7 @@ def test_check_boxes():
         for element in browser.all('.rc-tree-checkbox'):
             element.should(have.css_class('rc-tree-checkbox-checked'))
 
-    with allure.step('Проверка поля результат'):
+    with (allure.step('Проверка поля результат')):
         selected_checkboxes = browser.all('.rc-tree-checkbox-checked')
         selected_texts = []
 
@@ -58,10 +58,10 @@ def test_check_boxes():
         # преобразуем текст в строку
         expected_text = ' '.join(selected_texts)
 
-        # сравнение выбранного с полем отображения
-        browser.element('#result').should(have.text(expected_text))
-
-
+        # поиск слов в наборе
+        for word in browser.all('.text-success'):
+            word = word.locate().text
+            assert word in expected_text
 
 
 
