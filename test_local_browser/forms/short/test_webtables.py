@@ -122,6 +122,35 @@ def test_quantity_show_in_table():
     rows.should(have.size_greater_than_or_equal(10))
     rows.should(have.size_less_than_or_equal(20))
 
+
+def test_added_uncorrect_forms():
+    browser.open('/webtables')
+
+    browser.element('#addNewRecordButton').should(be.visible)
+    browser.element('#addNewRecordButton').click()
+    browser.element('.modal-content').should(be.visible)
+
+    # поля пустые, окно не пропадает
+    browser.element('#submit').click()
+    browser.element('.modal-content').should(be.visible)
+    browser.element('#userForm').should(have.css_class('was-validated'))
+
+    time.sleep(3)
+    browser.element('#firstName').should(have.css_class('is-invalid'))
+    time.sleep(3)
+
+
+
+    # browser.element('#firstName').type(user['First Name'])
+    # browser.element('#lastName').type(user['Last Name'])
+    # browser.element('#userEmail').type(user['Email'])
+    # browser.element('#age').type(user['Age'])
+    # browser.element('#salary').type(user['Salary'])
+    # browser.element('#department').type(user['Department'])
+    #
+    # browser.element('#submit').click()
+
+
 # ввод некорректных данных
 
 # имя и фамилия принимаю любое значение
@@ -133,3 +162,36 @@ def test_quantity_show_in_table():
 # зарпалата символы
 
 # департамент любое значение
+
+
+from selene import browser
+from selene.support.conditions import be, have
+
+
+def test_webtables_validation():
+    browser.open('/webtables')
+
+    browser.element('#addNewRecordButton').click()
+    browser.element('.modal-content').should(be.visible)
+
+    # Проверка что нет класса was-validated
+    browser.element('#userForm').should(have.no.css_class('was-validated'))
+
+    browser.element('#submit').click()
+
+    # Проверка что появился класс was-validated
+    browser.element('#userForm').should(have.css_class('was-validated'))
+
+    # Проверка полей с ошибкой через JavaScript (надежнее)
+    for field_id in ['firstName', 'lastName', 'userEmail', 'age']:
+        # Проверяем что поле не проходит валидацию
+        is_invalid = browser.execute_script(f"""
+            return !document.getElementById('{field_id}').checkValidity();
+        """)
+        assert is_invalid, f"Поле {field_id} должно быть невалидным"
+
+        # ИЛИ проверяем что поле соответствует псевдоклассу :invalid
+        matches_invalid = browser.execute_script(f"""
+            return document.getElementById('{field_id}').matches(':invalid');
+        """)
+        assert matches_invalid, f"Поле {field_id} должно соответствовать :invalid"
