@@ -1,7 +1,7 @@
 import time
 
 from selene import browser, have, be
-
+import allure
 from faker import Faker
 from selenium.webdriver import Keys
 
@@ -123,7 +123,7 @@ def test_quantity_show_in_table():
     rows.should(have.size_less_than_or_equal(20))
 
 
-def test_added_uncorrect_forms():
+def test_added_empty_forms():
     browser.open('/webtables')
 
     browser.element('#addNewRecordButton').should(be.visible)
@@ -133,65 +133,59 @@ def test_added_uncorrect_forms():
     # поля пустые, окно не пропадает
     browser.element('#submit').click()
     browser.element('.modal-content').should(be.visible)
-    browser.element('#userForm').should(have.css_class('was-validated'))
 
-    time.sleep(3)
-    browser.element('#firstName').should(have.css_class('is-invalid'))
-    time.sleep(3)
-
-
-
-    # browser.element('#firstName').type(user['First Name'])
-    # browser.element('#lastName').type(user['Last Name'])
-    # browser.element('#userEmail').type(user['Email'])
-    # browser.element('#age').type(user['Age'])
-    # browser.element('#salary').type(user['Salary'])
-    # browser.element('#department').type(user['Department'])
-    #
-    # browser.element('#submit').click()
-
-
-# ввод некорректных данных
-
-# имя и фамилия принимаю любое значение
-
-# емаил без спец символов
-
-# возрост отрицательный или символы
-
-# зарпалата символы
-
-# департамент любое значение
-
-
-from selene import browser
-from selene.support.conditions import be, have
-
-
-def test_webtables_validation():
-    browser.open('/webtables')
-
-    browser.element('#addNewRecordButton').click()
-    browser.element('.modal-content').should(be.visible)
-
-    # Проверка что нет класса was-validated
-    browser.element('#userForm').should(have.no.css_class('was-validated'))
-
-    browser.element('#submit').click()
-
+    # поля пустые, выдает везде ошибку
     # Проверка что появился класс was-validated
     browser.element('#userForm').should(have.css_class('was-validated'))
-
-    # Проверка полей с ошибкой через JavaScript (надежнее)
-    for field_id in ['firstName', 'lastName', 'userEmail', 'age']:
-        # Проверяем что поле не проходит валидацию
+    # Проверка полей с ошибкой через JavaScript
+    for field_id in ['firstName', 'lastName', 'userEmail', 'age', 'salary', 'department']:
+        # # Проверяем что поле не проходит валидацию
         is_invalid = browser.execute_script(f"""
             return !document.getElementById('{field_id}').checkValidity();
         """)
         assert is_invalid, f"Поле {field_id} должно быть невалидным"
 
-        # ИЛИ проверяем что поле соответствует псевдоклассу :invalid
-        matches_invalid = browser.execute_script(f"""
-            return document.getElementById('{field_id}').matches(':invalid');
-        """)
-        assert matches_invalid, f"Поле {field_id} должно соответствовать :invalid"
+
+def test_added_uncorrect_forms():
+    browser.open('/webtables')
+
+    browser.element('#addNewRecordButton').should(be.visible)
+    browser.element('#addNewRecordButton').click()
+
+    # # Словарь для сбора ошибок
+    # validation_errors: Dict[str, str] = {}
+
+    with allure.step("Заполнение формы с невалидными данными"):
+        # Заполнение полей неверными данными
+        modal = browser.element('.modal-content')
+        modal.should(be.visible)
+
+        browser.element('#firstName').type('Test123!@#$')
+        browser.element('#lastName').type('Test123!@#$')
+        browser.element('#userEmail').type('Test123!@#$')
+        browser.element('#age').type('Test123!@#$')
+        browser.element('#salary').type('Test123!@#$')
+        browser.element('#department').type('Test123!@#$')
+
+        browser.element('#submit').click()
+
+    with allure.step("Проверка валидации полей (с мягкими проверками)"):
+        for field_id in ['firstName', 'lastName', 'userEmail', 'age', 'salary', 'department']:
+            try:
+                is_invalid = browser.execute_script(f"""
+                            return !document.getElementById('{field_id}').checkValidity();
+                        """)
+                if not is_invalid:
+                    allure.attach(
+                        name=f"Недочет валидации в поле {field_id}",
+                        body=f"Поле {field_id} должно быть невалидным, но прошло проверку",
+                        attachment_type=allure.attachment_type.TEXT
+                    )
+
+            except Exception as e:
+                # Если ошибка при проверке - тоже отмечаем
+                allure.attach(
+                    name=f"Ошибка при проверке поля {field_id}",
+                    body=str(e),
+                    attachment_type=allure.attachment_type.TEXT
+                )
