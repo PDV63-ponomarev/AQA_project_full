@@ -5,6 +5,7 @@
    - Text Box
    - Check box
    - Radio Button
+   - Web Tables 
 2. Form
    - Pactice Form
 

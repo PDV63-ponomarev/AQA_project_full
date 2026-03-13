@@ -1,4 +1,3 @@
-import time
 
 from selene import browser, have, be
 import allure
@@ -6,19 +5,6 @@ from faker import Faker
 from selenium.webdriver import Keys
 
 fake = Faker()
-
-# генерация данных
-# fake = Faker()
-# users = {
-#     'First Name': fake.first_name(),
-#     'Last Name': fake.last_name(),
-#     'Email': fake.email(),
-#     'Age': fake.random_int(0, 99),
-#     'Salary': fake.random_int(500, 20000),
-#     'Department': fake.random_element([
-#         'QA', 'Developer', 'Marketing',
-#         'Legal', 'Insurance', 'Compliance'])
-# }
 users = None
 
 def check_empty_forms():
