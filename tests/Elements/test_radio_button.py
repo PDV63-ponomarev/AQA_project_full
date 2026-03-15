@@ -5,8 +5,8 @@ full_name = 'Иванов Иван'
 email = 'ivanov@gmail.com'
 address = 'Some adress'
 
-@allure.title("Successful fill text box")
-def test_simple_form(setup_browser):
+@allure.title("Successful check radio buttons")
+def test_radio_buttons(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
