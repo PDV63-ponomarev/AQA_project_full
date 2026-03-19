@@ -28,6 +28,8 @@ def test_link_open_new_tab():
     # проверка текущей вкладки
     browser.should(have.url_containing('demoqa.com'))
 
+    browser.close()
+    browser.switch_to_tab(0)
 
 def test_dynamic_link_open_new_tab_for_text():
 
@@ -54,6 +56,8 @@ def test_dynamic_link_open_new_tab_for_text():
     # проверка текущей вкладки
     browser.should(have.url_containing('demoqa.com'))
 
+    browser.close()
+    browser.switch_to_tab(0)
 
 def test_links_spend_api():
 

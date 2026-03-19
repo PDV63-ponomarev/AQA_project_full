@@ -110,4 +110,3 @@ def test_quantity_show_in_table():
     with allure.step('Проверка пользователей в таблице больше 10 и не больше 20'):
         rows.should(have.size_greater_than_or_equal(10))
         rows.should(have.size_less_than_or_equal(20))
-
