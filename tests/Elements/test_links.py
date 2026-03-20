@@ -26,8 +26,9 @@ def test_link_open_new_tab():
     with allure.step('Переход на новую вкладку'):
         browser.should(have.url_containing('demoqa.com'))
 
-    # browser.close()
-    # browser.switch_to_tab(0)
+    with allure.step('Закрытие вкладка'):
+        browser.driver.switch_to.window(browser.driver.window_handles[-1])
+        browser.close()
 
 @allure.title("Successful dynamic link open new tab")
 def test_dynamic_link_open_new_tab_for_text():
@@ -53,8 +54,10 @@ def test_dynamic_link_open_new_tab_for_text():
     with allure.step('Переход на новую вкладку'):
         browser.should(have.url_containing('demoqa.com'))
 
-    # browser.close()
-    # browser.switch_to_tab(0)
+    with allure.step('Закрытие вкладка'):
+        browser.driver.switch_to.window(browser.driver.window_handles[-1])
+        browser.close()
+
 
 @allure.title("Successful link give api")
 def test_links_spend_api():

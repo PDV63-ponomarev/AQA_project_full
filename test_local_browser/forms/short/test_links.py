@@ -2,7 +2,7 @@ from selene import have, browser, be, by
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests
-
+import time
 
 def test_link_open_new_tab():
 
@@ -25,11 +25,14 @@ def test_link_open_new_tab():
         EC.number_of_windows_to_be(len(original_windows) + 1)
     )
 
+    # ПЕРЕКЛЮЧАЕМСЯ НА ПОСЛЕДНЮЮ ВКЛАДКУ
+    browser.driver.switch_to.window(browser.driver.window_handles[-1])
+
     # проверка текущей вкладки
     browser.should(have.url_containing('demoqa.com'))
 
     browser.close()
-    browser.switch_to_tab(0)
+
 
 def test_dynamic_link_open_new_tab_for_text():
 
@@ -56,8 +59,10 @@ def test_dynamic_link_open_new_tab_for_text():
     # проверка текущей вкладки
     browser.should(have.url_containing('demoqa.com'))
 
+    # ПЕРЕКЛЮЧАЕМСЯ НА ПОСЛЕДНЮЮ ВКЛАДКУ
+    browser.driver.switch_to.window(browser.driver.window_handles[-1])
     browser.close()
-    browser.switch_to_tab(0)
+
 
 def test_links_spend_api():
 
