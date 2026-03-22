@@ -2,7 +2,9 @@ from selene import have, browser, be
 import allure
 
 @allure.title("Successful double click on button")
-def test_double_click():
+def test_double_click(setup_browser):
+    browser = setup_browser
+
     with allure.step('Открытие сайта'):
         browser.open('/buttons')
 
@@ -21,7 +23,8 @@ def test_double_click():
         browser.element('#doubleClickMessage').should(be.visible)
 
 @allure.title("Successful right click on button")
-def test_right_click():
+def test_right_click(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/buttons')
@@ -41,7 +44,8 @@ def test_right_click():
         browser.element('#rightClickMessage').should(be.visible)
 
 @allure.title("Successful click on dynamic button")
-def test_dynamic_click():
+def test_dynamic_click(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/buttons')
