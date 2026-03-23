@@ -18,6 +18,7 @@ def test_link_open_new_tab():
                     .value_containing('https://demoqa.com'))
 
     with allure.step('Появление новой вкладки'):
+        original_window = browser.driver.current_window_handle
         original_windows = browser.driver.window_handles
         link.click()
         WebDriverWait(browser.driver, 10).until(
@@ -29,6 +30,9 @@ def test_link_open_new_tab():
     with allure.step('Закрытие вкладка'):
         browser.driver.switch_to.window(browser.driver.window_handles[-1])
         browser.close()
+        browser.driver.switch_to.window(original_window)
+
+
 
 @allure.title("Successful dynamic link open new tab")
 def test_dynamic_link_open_new_tab_for_text():
@@ -45,6 +49,7 @@ def test_dynamic_link_open_new_tab_for_text():
                     .value_containing('https://demoqa.com'))
 
     with allure.step('Появление новой вкладки'):
+        original_window = browser.driver.current_window_handle
         original_windows = browser.driver.window_handles
         link.click()
         WebDriverWait(browser.driver, 10).until(
@@ -57,7 +62,7 @@ def test_dynamic_link_open_new_tab_for_text():
     with allure.step('Закрытие вкладка'):
         browser.driver.switch_to.window(browser.driver.window_handles[-1])
         browser.close()
-
+        browser.driver.switch_to.window(original_window)
 
 @allure.title("Successful link give api")
 def test_links_spend_api():

@@ -20,6 +20,18 @@ def browser_management(request):
 
     yield browser
 
+    # Восстанавливаем состояние браузера
+    # try:
+    #     # Если открыто несколько вкладок, закрываем все лишние
+    #     if len(browser.driver.window_handles) > 1:
+    #         main_window = browser.driver.window_handles[0]
+    #         for handle in browser.driver.window_handles[1:]:
+    #             browser.driver.switch_to.window(handle)
+    #             browser.driver.close()
+    #         browser.driver.switch_to.window(main_window)
+    # except Exception:
+    #     pass
+
     # Закрываем браузер после теста
     if not config.hold_driver_at_exit:
         browser.quit()
