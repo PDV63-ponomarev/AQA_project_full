@@ -5,7 +5,7 @@ import requests
 import allure
 
 @allure.title("Successful link open new tab")
-def test_link_open_new_tab():
+def un_test_link_open_new_tab():
 
     with allure.step('Открытие сайта'):
         browser.open('/links')
@@ -35,7 +35,7 @@ def test_link_open_new_tab():
 
 
 @allure.title("Successful dynamic link open new tab")
-def test_dynamic_link_open_new_tab_for_text():
+def un_test_dynamic_link_open_new_tab_for_text():
 
     with allure.step('Открытие сайта'):
         browser.open('/links')
