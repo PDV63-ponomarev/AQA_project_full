@@ -37,8 +37,9 @@
    - Practice Form
      - Заполнение полной формы
 3. Alert, Frame & Windows
-   - Browser Windows
+   - Alerts
      - Уведомление
+     - Уведомление через 5 сек
      - Диалог
      - Диалог с полем ввода
 

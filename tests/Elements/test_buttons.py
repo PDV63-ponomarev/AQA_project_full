@@ -1,4 +1,4 @@
-from selene import have, browser, be
+from selene import have, be
 import allure
 
 @allure.title("Successful double click on button")
