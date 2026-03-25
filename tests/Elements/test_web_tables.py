@@ -1,4 +1,4 @@
-from selene import browser, have, be
+from selene import have, be
 import allure
 from faker import Faker
 from selenium.webdriver import Keys
@@ -6,7 +6,18 @@ from selenium.webdriver import Keys
 fake = Faker()
 users = None
 
-def check_empty_forms():
+def test_web_tables(setup_browser):
+    browser = setup_browser
+
+    add_form(browser)
+
+    added_user_in_tables(browser)
+
+    check_search(browser)
+
+    quantity_show_in_table(browser)
+
+def check_empty_forms(browser):
     browser.element('#firstName').should(be.blank)
     browser.element('#lastName').should(be.blank)
     browser.element('#userEmail').should(be.blank)
@@ -15,7 +26,7 @@ def check_empty_forms():
     browser.element('#department').should(be.blank)
     browser.element('#submit').should(be.visible)
 
-def completion_random_form():
+def completion_random_form(browser):
     user = {
         'First Name': fake.first_name(),
         'Last Name': fake.last_name(),
@@ -37,8 +48,7 @@ def completion_random_form():
 
 
 @allure.title("Successful add form")
-def test_add_form(setup_browser):
-    browser = setup_browser
+def add_form(browser):
 
     with allure.step('Открытие сайта'):
         browser.open('/webtables')
@@ -57,7 +67,7 @@ def test_add_form(setup_browser):
         browser.element('.modal-content').should(be.absent)
 
 @allure.title("Successful find visible table")
-def test_added_user_in_tables():
+def added_user_in_tables(browser):
     with allure.step('Обнаружение таблицы'):
         tables = browser.element('.table-bordered')
         tables.should(be.visible)
@@ -67,7 +77,7 @@ def test_added_user_in_tables():
             tables.should(have.text(str(value)))
 
 @allure.title("Successful work search")
-def test_check_search():
+def check_search(browser):
     word = users['Last Name']
 
     with allure.step("Ввод в поиск имени"):
@@ -87,7 +97,7 @@ def test_check_search():
         search.send_keys(Keys.CONTROL + 'a').send_keys(Keys.DELETE)
 
 @allure.title("Successful show quantity users in tables")
-def test_quantity_show_in_table():
+def quantity_show_in_table(browser):
     with allure.step('Обнаружение таблицы'):
         browser.element('#addNewRecordButton').should(be.visible)
 

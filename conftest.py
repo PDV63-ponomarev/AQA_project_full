@@ -12,7 +12,7 @@ def load_env():
     load_dotenv()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def setup_browser(request):
     options = Options()
 

@@ -1,9 +1,10 @@
 import time
-from selene import browser, be, have
+from selene import be, have
 import allure
 
 @allure.title("Successful button enable before 5 seconds")
-def test_enable_button():
+def test_enable_button(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/dynamic-properties')
@@ -22,7 +23,8 @@ def test_enable_button():
         enable_button.should(be.clickable)
 
 @allure.title("Successful button change color before 5 seconds")
-def test_change_button():
+def test_change_button(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/dynamic-properties')
@@ -44,7 +46,8 @@ def test_change_button():
         change_button.should(have.css_class('text-danger'))
 
 @allure.title("Successful button visible before 5 seconds")
-def test_visible_button():
+def test_visible_button(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/dynamic-properties')
@@ -61,7 +64,8 @@ def test_visible_button():
         visible_button.should(be.clickable)
 
 @allure.title("Successful buttons complite before 5 seconds")
-def test_complite_button():
+def test_complite_button(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/dynamic-properties')

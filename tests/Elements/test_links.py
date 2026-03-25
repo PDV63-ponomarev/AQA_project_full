@@ -1,11 +1,12 @@
-from selene import have, browser, be, by
+from selene import have, be
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests
 import allure
 
 @allure.title("Successful link open new tab")
-def un_test_link_open_new_tab():
+def test_link_open_new_tab(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/links')
@@ -27,15 +28,15 @@ def un_test_link_open_new_tab():
     with allure.step('Переход на новую вкладку'):
         browser.should(have.url_containing('demoqa.com'))
 
-    with allure.step('Закрытие вкладка'):
+    with allure.step('Закрытие вкладки'):
         browser.driver.switch_to.window(browser.driver.window_handles[-1])
         browser.close()
         browser.driver.switch_to.window(original_window)
 
 
-
 @allure.title("Successful dynamic link open new tab")
-def un_test_dynamic_link_open_new_tab_for_text():
+def test_dynamic_link_open_new_tab_for_text(setup_browser):
+    browser = setup_browser
 
     with allure.step('Открытие сайта'):
         browser.open('/links')
@@ -59,7 +60,7 @@ def un_test_dynamic_link_open_new_tab_for_text():
     with allure.step('Переход на новую вкладку'):
         browser.should(have.url_containing('demoqa.com'))
 
-    with allure.step('Закрытие вкладка'):
+    with allure.step('Закрытие вкладки'):
         browser.driver.switch_to.window(browser.driver.window_handles[-1])
         browser.close()
         browser.driver.switch_to.window(original_window)
