@@ -59,8 +59,8 @@ def add_form(browser):
         browser.element('.modal-content').should(be.visible)
 
     with allure.step('Заполнение полей'):
-        check_empty_forms()
-        completion_random_form()
+        check_empty_forms(browser)
+        completion_random_form(browser)
 
     with allure.step('Поле закрылось'):
         browser.element('#submit').click()
@@ -105,7 +105,7 @@ def quantity_show_in_table(browser):
         i = 0
         while i < 15:
             browser.element('#addNewRecordButton').click()
-            completion_random_form()
+            completion_random_form(browser)
             browser.element('#submit').click()
             i += 1
 
