@@ -67,5 +67,5 @@
 
 <details>
     <summary>Видео выполнения</summary>
-<video src="allure/video.mp4" controls></video>
-</details> 
+    <a href="allure/video.mp4">Скачать или открыть видео выполнения</a>
+</details>
