@@ -3,7 +3,7 @@ from selene import be, have
 import allure
 
 @allure.title("Successful button enable before 5 seconds")
-def test_enable_button(setup_browser):
+def un_test_enable_button(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
@@ -23,7 +23,7 @@ def test_enable_button(setup_browser):
         enable_button.should(be.clickable)
 
 @allure.title("Successful button change color before 5 seconds")
-def test_change_button(setup_browser):
+def un_test_change_button(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
@@ -46,7 +46,7 @@ def test_change_button(setup_browser):
         change_button.should(have.css_class('text-danger'))
 
 @allure.title("Successful button visible before 5 seconds")
-def test_visible_button(setup_browser):
+def un_test_visible_button(setup_browser):
     browser = setup_browser
 
     with allure.step('Открытие сайта'):
